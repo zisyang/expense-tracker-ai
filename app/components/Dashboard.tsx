@@ -1,12 +1,12 @@
 'use client';
 import { Expense, Category, CATEGORY_COLORS } from '@/app/types/expense';
-import { formatCurrency, getCategoryChartData, getMonthlyTotals } from '@/app/lib/utils';
+import { formatCurrency, getCategoryChartData, getMonthlyTotals, exportToCSV } from '@/app/lib/utils';
 import CategoryBadge from './CategoryBadge';
 import {
   PieChart, Pie, Cell, Tooltip, ResponsiveContainer,
   BarChart, Bar, XAxis, YAxis, CartesianGrid,
 } from 'recharts';
-import { Coins, CalendarDays, Tag, TrendingUp } from 'lucide-react';
+import { Coins, CalendarDays, Tag, TrendingUp, Download } from 'lucide-react';
 
 interface DashboardProps {
   expenses: Expense[];
@@ -39,6 +39,18 @@ export default function Dashboard({ expenses }: DashboardProps) {
 
   return (
     <div>
+      <div className="flex items-center justify-between mb-5">
+        <h2 className="text-sm font-medium text-gray-400 uppercase tracking-wide">Overview</h2>
+        <button
+          onClick={() => exportToCSV(expenses)}
+          disabled={expenses.length === 0}
+          className="flex items-center gap-2 px-4 py-2 text-sm rounded-lg border border-gray-200 bg-white hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        >
+          <Download size={14} />
+          Export Data
+        </button>
+      </div>
+
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
         <MetricCard icon={<Coins size={13} />} label="Total spent" value={formatCurrency(total)} sub={`${expenses.length} transactions`} />
         <MetricCard icon={<CalendarDays size={13} />} label="This month" value={formatCurrency(monthly)} sub={now.toLocaleString('default', { month: 'long' })} />

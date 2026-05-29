@@ -44,8 +44,8 @@ export function getCategoryChartData(expenses: Expense[]) {
 
 export function exportToCSV(expenses: Expense[]): void {
   const rows = [
-    ['Date', 'Amount', 'Category', 'Description'],
-    ...expenses.map(e => [e.date, e.amount, e.category, e.description]),
+    ['Date', 'Category', 'Amount', 'Description'],
+    ...expenses.map(e => [e.date, e.category, e.amount, e.description]),
   ];
   const csv = rows
     .map(r => r.map(v => '"' + String(v).replace(/"/g, '""') + '"').join(','))
