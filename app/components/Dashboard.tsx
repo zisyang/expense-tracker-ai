@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { Expense, Category, CATEGORY_COLORS } from '@/app/types/expense';
 import { formatCurrency, getCategoryChartData, getMonthlyTotals } from '@/app/lib/utils';
 import CategoryBadge from './CategoryBadge';
-import ExportModal from './ExportModal';
+import CloudExportHub from './CloudExportHub';
 import {
   PieChart, Pie, Cell, Tooltip, ResponsiveContainer,
   BarChart, Bar, XAxis, YAxis, CartesianGrid,
 } from 'recharts';
-import { Coins, CalendarDays, Tag, TrendingUp, FileDown } from 'lucide-react';
+import { Coins, CalendarDays, Tag, TrendingUp, CloudUpload } from 'lucide-react';
 
 interface DashboardProps {
   expenses: Expense[];
@@ -42,15 +42,14 @@ export default function Dashboard({ expenses }: DashboardProps) {
 
   return (
     <div>
-      {/* Header row with Export button */}
       <div className="flex items-center justify-between mb-5">
         <h2 className="text-sm font-medium text-gray-400 uppercase tracking-wide">Overview</h2>
         <button
           onClick={() => setExportOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl border border-gray-200 bg-white hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm"
+          className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 shadow-sm transition-all"
         >
-          <FileDown size={15} className="text-blue-600" />
-          Export Data
+          <CloudUpload size={14} />
+          Cloud Export
         </button>
       </div>
 
@@ -128,7 +127,7 @@ export default function Dashboard({ expenses }: DashboardProps) {
       </div>
 
       {exportOpen && (
-        <ExportModal expenses={expenses} onClose={() => setExportOpen(false)} />
+        <CloudExportHub expenses={expenses} onClose={() => setExportOpen(false)} />
       )}
     </div>
   );
